@@ -6,12 +6,14 @@ export default defineEventHandler(async (event) => {
     const url = `${host}/api/v1/logout`;
     const status = ref(422);
     const accessToken = getCookie(event, 'token');
+    const userAgent = event.node.req.headers['user-agent'] || 'Unknown';
     
     const data = await $fetch(url, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
+            'User-Agent': userAgent,
         },
     });
 

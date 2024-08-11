@@ -6,10 +6,11 @@ export default defineEventHandler(async (event) => {
     const body = await readBody(event)
     const url = `${host}/api/v1/login`;
     const status = ref(422);
+    const userAgent = event.node.req.headers['user-agent'] || 'Unknown';
     
     const { data, pending }: any = await $fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'User-Agent': userAgent },
         body: body,
     });
 
