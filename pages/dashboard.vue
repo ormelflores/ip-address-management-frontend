@@ -6,6 +6,14 @@
     import Table from '~/components/Table.vue';
     import TextInput from '~/components/TextInput.vue';
 
+    useHead({
+        titleTemplate: ' Dashboard'
+    })
+    
+    definePageMeta({
+        middleware: 'auth',
+    })
+
     const form = ref({
         ip_address: '',
         label: '',

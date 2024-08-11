@@ -1,6 +1,14 @@
 <script setup>
     import AuthenticatedLayout from '~/components/AuthenticatedLayout.vue';
     import Table from '~/components/Table.vue';
+
+    useHead({
+        titleTemplate: ' Audit Logs'
+    })
+
+    definePageMeta({
+        middleware: 'auth',
+    })
 </script>
 
 <template>

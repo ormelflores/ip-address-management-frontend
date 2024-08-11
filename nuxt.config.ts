@@ -9,4 +9,9 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  runtimeConfig: {
+    public: {
+      host: process.env.API_HOST,
+    },
+  },
 })

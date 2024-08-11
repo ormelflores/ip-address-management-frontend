@@ -1,11 +1,56 @@
 <script setup >
+  import InputError from '~/components/InputError.vue';
   import InputLabel from '~/components/InputLabel.vue';
   import TextInput from '~/components/TextInput.vue';
+
+  useHead({
+    titleTemplate: ' Login'
+  })
+  
+  definePageMeta({
+    middleware: 'guest',
+  })
+
+  const isProcessing = ref(false);
 
   const form = ref({
       email: '',
       password: '',
   });
+
+  const errors = ref({
+    email: null,
+    password: null,
+    general: null,
+  });
+
+  const submit = async () => {
+    isProcessing.value = true;
+    errors.value.email = null;
+    errors.value.password = null;
+    errors.value.general = null;
+    
+    await $fetch('/api/login', {
+      method: 'POST',
+      body: form.value,
+    }).catch((error) => {
+        errors.value.email = error.data.data.errors?.email ? error.data.data.errors?.email[0] : '';
+        errors.value.password = error.data.data.errors?.password ? error.data.data.errors?.password[0] : '';
+        errors.value.general = error.data.data.errors?.details;
+        
+        isProcessing.value = false;
+    }).then((res) => {
+      if(typeof res !== 'undefined' && res.status == 201)
+      {
+        navigateTo('/dashboard');
+        isProcessing.value = false;
+      }
+      else
+      {
+        isProcessing.value = false;
+      }
+    })
+  }
 </script>
 
 <template>
@@ -17,36 +62,43 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form class="space-y-6" @submit.prevent="submit">
         <div>
             <InputLabel for="email" value="Email" />
 
-            <TextInput
-              id="email"
-              type="email"
-              class="mt-1 block w-full"
-              v-model="form.email"
-              required
-              autofocus
-              autocomplete="email"
-            />
+            <div class="mt-2">
+              <TextInput
+                id="email"
+                type="email"
+                class="mt-1 block w-full"
+                v-model="form.email"
+                autofocus
+                :class="{ 'border-2 border-red-500': errors.email }" 
+              />
+            </div>
+            <InputError class="mt-2" v-if="errors.email" :message="errors.email"></InputError>
         </div>
 
         <div>
           <InputLabel for="password" value="Password" />
 
-          <TextInput
-            id="password"
-            type="password"
-            v-model="form.password"
-            class="mt-1 block w-full"
-            required
-            autocomplete="current-password"
-          />
+          <div class="mt-2">
+            <TextInput
+              id="password"
+              type="password"
+              v-model="form.password"
+              class="mt-1 block w-full"
+              required
+              :class="{ 'border-2 border-red-600': errors.password }" 
+            />
+          </div>
+          <InputError v-if="errors.password" :message="errors.password"></InputError>
         </div>
 
+        <InputError v-if="errors.general" :message="errors.general"></InputError>
+
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+          <button type="submit" :class="{ 'opacity-25': isProcessing }" :disabled="isProcessing" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
         </div>
       </form>
     </div>
