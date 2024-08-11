@@ -79,16 +79,16 @@ import Modal from './Modal.vue';
  
 <template>
     <tr class="text-gray-700">
-        <td class="px-4 py-3 text-xs capitalize font-bold">
+        <td class="px-4 py-3 text-xs font-bold">
             {{ip_address.ip_address}}
         </td>
-        <td class="px-4 py-3 text-xs capitalize">
+        <td class="px-4 py-3 text-xs">
             {{ip_address.label}}
         </td>
-        <td class="px-4 py-3 text-xs capitalize">
+        <td class="px-4 py-3 text-xs">
             {{moment(ip_address.created_at).format("MMMM DD, YYYY")}} at {{moment(ip_address.created_at).format("hh:mm:ss A")}}
         </td>
-        <td class="px-4 py-3 text-xs capitalize">
+        <td class="px-4 py-3 text-xs">
             {{moment(ip_address.updated_at).format("MMMM DD, YYYY")}} at {{moment(ip_address.updated_at).format("hh:mm:ss A")}}
         </td>
         <td class="px-4 py-3 text-sm">

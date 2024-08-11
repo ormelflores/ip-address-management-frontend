@@ -2,6 +2,7 @@
     import { ref } from 'vue';
     const showNavbarMobile = ref(false);
     const showLogout = ref(false);
+    const route = useRoute();
 
     defineProps({
         title: {
@@ -22,6 +23,7 @@
             }
         })
     }
+    
 </script>
 
 <template>
@@ -36,8 +38,8 @@
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="/dashboard" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white" aria-current="page">Dashboard</a>
-                <a href="/audit-logs" class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Audit Logs</a>
+                <a href="/dashboard" :class="route.name == 'dashboard' ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white'" class="rounded-md  px-3 py-2 text-sm font-medium" aria-current="page">Dashboard</a>
+                <a href="/audit-logs" :class="route.name == 'audit-logs' ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white'" class="rounded-md px-3 py-2 text-sm font-medium ">Audit Logs</a>
                 </div>
             </div>
             </div>
@@ -84,8 +86,8 @@
         <!-- Mobile menu, show/hide based on menu state. -->
         <div class="md:hidden" id="mobile-menu" v-if="showNavbarMobile">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <a href="/dashboard" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white" aria-current="page">Dashboard</a>
-            <a href="/audit-logs" class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Audit Logs</a>
+            <a href="/dashboard"  :class="route.name == 'dashboard' ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white'" class="block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
+            <a href="/audit-logs"  :class="route.name == 'audit-logs' ? 'text-white bg-gray-900' : 'text-gray-300 hover:bg-gray-700 hover:text-white'" class="block rounded-md px-3 py-2 text-base font-medium">Audit Logs</a>
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
             <div class="flex items-center px-5">

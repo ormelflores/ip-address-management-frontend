@@ -134,6 +134,7 @@
                 </tbody>
             </table>
             </div>
+            <!-- PAGINATION -->
             <div
                 class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t bg-gray-50 sm:grid-cols-9"
                 v-if="ipAddressList.meta && ipAddressList.meta.links && ipAddressList.meta.links.length > 3">
@@ -143,9 +144,9 @@
                 <nav aria-label="Table navigation">
                     <ul class="inline-flex items-center">
                     <li v-for="(link, k) in ipAddressList.meta.links" :key="k">
-                        <a class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-indigo cursor-pointer"
+                        <a class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-gray cursor-pointer"
                         v-html="link.label" @click="nextPage(link.url.split('ip_addresses=')[1])"
-                        :class="{'px-3 py-1 text-white transition-colors duration-150 bg-indigo-400 border border-r-0 border-indigo-300 rounded-md focus:outline-none focus:shadow-outline-indigo': link.active}">
+                        :class="{'px-3 py-1 text-white transition-colors duration-150 bg-gray-800 border border-r-0 border-gray-800 rounded-md focus:outline-none focus:shadow-outline-gray': link.active}">
                         </a>
                     </li>
                     </ul>
@@ -153,7 +154,7 @@
                 </span>
             </div>
         </Table>
-        
+
         <!-- ADD MODAL -->
         <Modal v-show="modalActive" @keydown.escape.prevent.stop="modalActive = false" @click="modalActive = false">
             <template v-slot:header>
